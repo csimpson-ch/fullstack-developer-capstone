@@ -1,4 +1,4 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 # from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 # from django.shortcuts import get_object_or_404, render, redirect
@@ -74,6 +74,7 @@ def registration(request):
         username_exist = True
     except Exception as err:
         # If not, simply log this as a new user
+        logger.debug("{}".format(err))
         logger.debug("{} is new user".format(username))
 
     # If it is a new user, create the user
@@ -81,10 +82,10 @@ def registration(request):
 
         # Create user in auth_user table
         user = User.objects.create_user(
-            username=username, 
-            first_name=first_name, 
-            last_name=last_name, 
-            password=password, 
+            username=username,
+            first_name=first_name,
+            last_name=last_name,
+            password=password,
             email=email
         )
 
@@ -161,15 +162,18 @@ def add_review(request):
     '''View to submit a review.
     '''
     # first, check if user is authenticated before allowing to post review
-    if (request.user.is_anonymous == False):
+    if not request.user.is_anonymous:
         data = json.loads(request.body)
         try:
             # call method to post a review
-            response = post_review(data)
+            _ = post_review(data)
 
             # return success status and message as JSON
             return JsonResponse({"status": 200})
-        except:
-            return JsonResponse({"status": 401, "message": "Error in posting review"})
+        except Exception as error:
+            return JsonResponse({
+                "status": 401,
+                "message": "Error in posting review, {}".format(err)
+            })
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})
