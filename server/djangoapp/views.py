@@ -112,7 +112,7 @@ def get_cars(request):
     cars = []
     for car_model in car_models:
         cars.append({
-            "CarModel": car_model.name, 
+            "CarModel": car_model.name,
             "CarMake": car_model.car_make.name
         })
     return JsonResponse({"CarModels": cars})
@@ -170,7 +170,7 @@ def add_review(request):
 
             # return success status and message as JSON
             return JsonResponse({"status": 200})
-        except Exception as error:
+        except Exception as err:
             return JsonResponse({
                 "status": 401,
                 "message": "Error in posting review, {}".format(err)

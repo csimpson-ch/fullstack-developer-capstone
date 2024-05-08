@@ -21,22 +21,22 @@ urlpatterns = [
     # path for dealer reviews view
     path(route='get_dealers', view=views.get_dealerships, name='get_dealers'),
     path(
-        route='get_dealers/<str:state>', 
+        route='get_dealers/<str:state>',
         view=views.get_dealerships,
         name='get_dealers_by_state'
     ),
 
     # another path as part of lab, takes dealer_id as parameter in views
     path(
-        route='dealer/<int:dealer_id>', 
-        view=views.get_dealer_details, 
+        route='dealer/<int:dealer_id>',
+        view=views.get_dealer_details,
         name='dealer_details'
     ),
 
     # another path for lab, sentiment analysis on reviews for dealer
     path(
-        route='reviews/dealer/<int:dealer_id>', 
-        view=views.get_dealer_reviews, 
+        route='reviews/dealer/<int:dealer_id>',
+        view=views.get_dealer_reviews,
         name='dealer_details'
     ),
 
